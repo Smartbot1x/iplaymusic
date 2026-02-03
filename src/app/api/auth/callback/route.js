@@ -20,7 +20,7 @@ export async function GET(request) {
   const data = await response.json();
   const cookieStore = await cookies();
   // IPM_AT = iPlay Music Access Token og refresh token
-  cookieStore.set("IPM_AT", data.access_token, { maxAge: data.expires_in })
+  cookieStore.set("IPM_AT", data.access_token, { maxAge: data.expires_in * 200 });
   cookieStore.set("IPM_RT", data.refresh_token, { maxAge: data.expires_in * 5 });
 
 

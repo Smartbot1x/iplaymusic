@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --primary-txt-clr: #341931;
   --bg: #ffffff;
@@ -9,6 +11,12 @@
   --background: var(--sec-bg);
   --lys: var(--foreground);
   --mørk: var(--background);
+  --bg-gradient: linear-gradient(180deg, #ee0979 0%, #ff6a00 100%);
+  /* --wave-start: #ee0979;
+  --wave-1: #fc1c62;
+  --wave-2: #ff364a;
+  --wave-3: #ff512f;
+  --wave-end: #ff6a00; */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,10 +25,13 @@
     --mørk: var(--foreground);
   }
 }
+
+html.dark {
+  --lys: var(--background);
+  --mørk: var(--foreground);
+}
 body {
   font-family: var(--font-poppins);
-  background-color: var(--lys);
-  color: var(--mørk);
 }
 /* =====================
    layers and themes
@@ -33,10 +44,45 @@ body {
   }
 }
 @layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .bg-gradient {
+    background: var(--bg-gradient);
+  }
 }
 
 .flex-center {
   @apply flex items-center justify-center text-left;
+}
+
+.gradient-icon {
+  display: inline-block;
+  background: linear-gradient(45deg, #ff6a00, #ee0979);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Sound wave animation for player */
+@keyframes wave {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.animate-wave {
+  animation: wave 0.8s ease-in-out infinite;
+  transform-origin: center;
 }
 
 @theme {
@@ -55,6 +101,8 @@ body {
   --font-weight-bold: 700;
   --color-bg-primary: #ffffff;
   --color-bg-secondary: #341931;
+  --box-shadow: 0 -5px 12.5px 0 rgba(0, 0, 0, 0.2);
+  /* --bg-gradient: linear-gradient(180deg, #ee0979 0%, #ff6a00 100%); */
 }
 @theme inline {
   --color-background: var(--lys);

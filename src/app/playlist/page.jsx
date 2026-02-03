@@ -1,9 +1,8 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getplaylists } from "../../lib/services";
-import { MdArrowBackIos } from "react-icons/md";
-import Link from "next/link";
-import { CiSearch } from "react-icons/ci";
+import { getPlaylists } from "../../lib/services";
+import PlaylistHeader from "../../components/playlist-header";
+import PlaylistPreview from "../../components/playlist-preview";
 
 export default async function playlistPage() {
   const cookieStore = await cookies();
@@ -13,43 +12,27 @@ export default async function playlistPage() {
     redirect("/");
   }
 
-  const playlists = await getplaylists(accessToken.value);
+  const playlists = await getPlaylists(accessToken.value);
 
   return (
     <>
-      <div className="top_page bg-[url(/sound-wave.svg)] bg-contain bg-no-repeat w-93.75 h-[272.28px] ">
-        <div className="container flex justify-between">
-          <Link href="/" className="back_link">
-            <MdArrowBackIos className="" />
-          </Link>
-          <p>Playlist</p>
-          <CiSearch />
-        </div>
-        {/*  <p align="center">
-          <a href="https://github.com/kittinan/spotify-github-profile">
-            <img src="https://spotify-github-profile.kittinanx.com/api/view?uid=max.deeq2012&cover_image=true&theme=spotify-embed&show_offline=false&background_color=121212&interchange=true&profanity=false&bar_color=53b14f&bar_color_cover=false&mode=dark" />
-          </a>
-        </p> */}
-      </div>
-      <h1 className="flex-center">Your playlist</h1>
-      <section className="flex-center ">
+      <PlaylistHeader />
+
+      <section className="px-6 py-8 bg-white dark:bg-gray-950 min-h-screen pb-40">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          Your Playlists
+        </h2>
+
         {playlists && playlists.length > 0 ? (
-          <ul>
+          <div className="space-y-4 space-x-5 ">
             {playlists.map((playlist) => (
-              <li className="space-y-4" key={playlist.id}>
-                {playlist.name}
-                <span className="space">
-                  <img
-                    src={playlist.images[0].url}
-                    alt="playlist image"
-                    className="w-38.5 h-38.5 object-cover rounded-lg"
-                  />
-                </span>
-              </li>
+              <PlaylistPreview key={playlist.id} playlist={playlist} />
             ))}
-          </ul>
+          </div>
         ) : (
-          <p className="">Playlists will be displayed here.</p>
+          <p className="text-center text-gray-500 dark:text-gray-400 py-16">
+            No playlists found.
+          </p>
         )}
       </section>
     </>

@@ -1,5 +1,7 @@
 
 import "./globals.css";
+import Footer from "../components/footer";
+import ThemeProvider from "@/contexts/ThemeContext";
 
 
 
@@ -15,18 +17,19 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-
-      >
-        <header>
-          {/* Header can go here */}
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen bg-white text-gray-900 transition-colors duration-300 dark:bg-gray-950 dark:text-gray-100">
+        <ThemeProvider>
+          <header>
 
 
-        </header>
-        <main>
-          {children}
-        </main>
+
+          </header>
+          <main>
+            {children}
+          </main>
+          <Footer />
+        </ThemeProvider>
 
       </body>
     </html>

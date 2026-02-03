@@ -11,5 +11,5 @@ export function middleware(request) {
 }
 
 export const config = {
-    matcher: ["/playlist/:path*"],
+    matcher: ["/playlist/:path*", "/profile/:path*", "/artist/:path*"],
 };
